@@ -11,10 +11,18 @@ export class WeatherStationsService {
   ) {}
 
   findAll(): Promise<WeatherStation[]> {
-    return this.weatherStationsRepository.find({
-      relations: {
-        data: true,
-      },
-    });
+    return this.weatherStationsRepository
+      .createQueryBuilder('ws')
+      .leftJoinAndSelect(
+        'ws.data',
+        'data',
+        `data.id = (
+        SELECT d2.id FROM data d2
+        WHERE d2.weather_station_id = ws.id
+        ORDER BY d2.timestamp DESC
+        LIMIT 1
+      )`,
+      )
+      .getMany();
   }
 }
