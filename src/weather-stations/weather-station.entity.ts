@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Data } from 'src/data/data.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('weather_stations')
 export class WeatherStation {
@@ -22,4 +23,7 @@ export class WeatherStation {
 
   @Column()
   longitude: string;
+
+  @OneToMany(() => Data, (data) => data.weatherStation)
+  data: Data[];
 }
