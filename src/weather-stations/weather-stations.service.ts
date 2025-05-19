@@ -11,6 +11,10 @@ export class WeatherStationsService {
   ) {}
 
   findAll(): Promise<WeatherStation[]> {
-    return this.weatherStationsRepository.find();
+    return this.weatherStationsRepository.find({
+      relations: {
+        data: true,
+      },
+    });
   }
 }
