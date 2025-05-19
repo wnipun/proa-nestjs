@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WeatherStationsModule } from './weather-stations/weather-stations.module';
 import { ConfigModule } from '@nestjs/config';
 import { DataModule } from './data/data.module';
+import { VariablesModule } from './variables/variables.module';
 
 @Module({
   imports: [
@@ -17,11 +18,12 @@ import { DataModule } from './data/data.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       entities: [],
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
     }),
     WeatherStationsModule,
     DataModule,
+    VariablesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
