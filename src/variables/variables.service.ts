@@ -11,6 +11,14 @@ export class VariablesService {
   ) {}
 
   findAll(): Promise<Variable[]> {
-    return this.variablesRepository.find();
+    return this.variablesRepository
+      .createQueryBuilder('variable')
+      .select([
+        'variable.name as name',
+        'variable.unit as unit',
+        'variable.long_name as long_name',
+      ])
+      .groupBy('variable.name')
+      .getRawMany();
   }
 }
