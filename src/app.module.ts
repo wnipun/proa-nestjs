@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WeatherStationsModule } from './weather-stations/weather-stations.module';
 import { ConfigModule } from '@nestjs/config';
+import { DataModule } from './data/data.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
     }),
     WeatherStationsModule,
+    DataModule,
   ],
   controllers: [AppController],
   providers: [AppService],
