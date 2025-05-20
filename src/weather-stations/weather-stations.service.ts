@@ -25,4 +25,21 @@ export class WeatherStationsService {
       )
       .getMany();
   }
+
+  findUsingState(state: string): Promise<WeatherStation[]> {
+    return this.weatherStationsRepository
+      .createQueryBuilder('ws')
+      .leftJoinAndSelect(
+        'ws.data',
+        'data',
+        `data.id = (
+        SELECT d2.id FROM data d2
+        WHERE d2.weather_station_id = ws.id
+        ORDER BY d2.timestamp DESC
+        LIMIT 1
+      )`,
+      )
+      .where('ws.state = :state', { state })
+      .getMany();
+  }
 }
